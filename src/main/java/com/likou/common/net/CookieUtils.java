@@ -22,9 +22,11 @@ public class CookieUtils {
      * @param name
      * @param value
      */
-    public static void addCookie(HttpServletResponse response,String path ,String name, String value){
+    public static void addCookie(HttpServletResponse response,String domain,String path ,String name, String value){
         Cookie cookie = new Cookie(name.trim(), value.trim());
         cookie.setMaxAge(30 * 60);// 设置为30min
+        cookie.setDomain(domain);
+        cookie.setHttpOnly(true);
         cookie.setPath("/");
         response.addCookie(cookie);
     }
@@ -38,12 +40,12 @@ public class CookieUtils {
      * 注意一、修改、删除Cookie时，新建的Cookie除value、maxAge之外的所有属性，例如name、path、domain等，都要与原Cookie完全一样。
      * 否则，浏览器将视为两个不同的Cookie不予覆盖，导致修改、删除失败。
      */
-    public static void editCookie(HttpServletRequest request, HttpServletResponse response,String path , String name, String value){
+    public static void editCookie(HttpServletRequest request, HttpServletResponse response,String domain,String path , String name, String value){
         Cookie[] cookies = request.getCookies();
         if (null!=cookies){
             for(Cookie cookie : cookies){
                 if(cookie.getName().trim().equals(name.trim())){
-                    addCookie(response,path,name,value);
+                    addCookie(response,domain,path,name,value);
                     break;
                 }
             }
@@ -56,14 +58,13 @@ public class CookieUtils {
      * @param response
      * @param name
      */
-    public static void delCookie(HttpServletRequest request,HttpServletResponse response, String path ,String name){
+    public static void delCookie(HttpServletRequest request,HttpServletResponse response, String domain,String path ,String name){
         Cookie[] cookies = request.getCookies();
         if (null!=cookies) {
             for(Cookie cookie : cookies){
                 if(cookie.getName().trim().equals(name.trim())){
                     cookie.setValue(null);
                     cookie.setMaxAge(0);// 立即销毁cookie
-                    cookie.setPath(path);
                     response.addCookie(cookie);
                     break;
                 }
@@ -102,12 +103,8 @@ public class CookieUtils {
         String t = DigestUtils.md5Hex(sb.toString());
         String i = Integer.toString(index);
 
-        CookieUtils.addCookie(response,"/","i",i);
-        CookieUtils.addCookie(response,"/","t",t);
-        CookieUtils.addCookie(response,"/","sessionID",sessionID);
-//        response.setHeader("Set-Cookie", "i="+i+";Path=/;Domain=mydning.com;Max-Age=1800;HttpOnly");
-//        response.setHeader("Set-Cookie", "t="+t+";Path=/;Domain=mydning.com;Max-Age=1800;HttpOnly");
-//        response.setHeader("Set-Cookie", "sessionID="+sessionID+";Path=/;Domain=mydning.com;Max-Age=1800;HttpOnly");
-
+        CookieUtils.addCookie(response,domain,"/","i",i);
+        CookieUtils.addCookie(response,domain,"/","t",t);
+        CookieUtils.addCookie(response,domain,"/","sessionID",sessionID);
     }
 }
