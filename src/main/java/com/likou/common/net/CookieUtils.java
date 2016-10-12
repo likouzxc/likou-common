@@ -12,10 +12,7 @@ import java.util.Random;
 /**
  * Created by jiangli on 16/9/18.
  */
-public class CookieUtils {
-    public static String MD5 = "lijiang";
-    private static Random random = new Random();
-    /**
+public class CookieUtils { /**
      * 添加cookie
      * @param response
      * @param path
@@ -88,23 +85,5 @@ public class CookieUtils {
             }
         }
         return null;
-    }
-
-    /**
-     *
-     * @param response
-     * @param domain
-     */
-    public static void addCookieForLogin(HttpServletResponse response, String domain){
-        int index = random.nextInt(32);
-        String sessionID = DigestUtils.md5Hex(IDGen.get32ID());
-        StringBuffer sb = new StringBuffer(sessionID);
-        sb.insert(index,MD5);
-        String t = DigestUtils.md5Hex(sb.toString());
-        String i = Integer.toString(index);
-
-        CookieUtils.addCookie(response,domain,"/","i",i);
-        CookieUtils.addCookie(response,domain,"/","t",t);
-        CookieUtils.addCookie(response,domain,"/","sessionID",sessionID);
     }
 }

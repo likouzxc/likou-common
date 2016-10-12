@@ -3,7 +3,6 @@ package com.likou.common.captcha;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -12,7 +11,7 @@ import java.util.Random;
 /**
  * Created by jiangli on 16/9/18.
  */
-public class CreaterCaptcha {
+public class Captcha {
 
     // 图片的宽度。
     private int width = 120;
@@ -32,7 +31,7 @@ public class CreaterCaptcha {
     // 生成随机数
     private Random random = new Random();
 
-    public CreaterCaptcha() {
+    public Captcha() {
     }
 
     /**
@@ -42,7 +41,7 @@ public class CreaterCaptcha {
      * @param height
      *            图片高
      */
-    public CreaterCaptcha(int width, int height) {
+    public Captcha(int width, int height) {
         this.width = width;
         this.height = height;
     }
@@ -58,7 +57,7 @@ public class CreaterCaptcha {
      * @param lineCount
      *            干扰线条数
      */
-    public CreaterCaptcha(int width, int height, int codeCount, int lineCount) {
+    public Captcha(int width, int height, int codeCount, int lineCount) {
         this.width = width;
         this.height = height;
         this.codeCount = codeCount;
@@ -159,17 +158,6 @@ public class CreaterCaptcha {
     }
 
     public String getCode() {
-        this.createCode();
         return code;
-    }
-    public static void main(String[] args) {
-        CreaterCaptcha util = new CreaterCaptcha();
-        try {
-            System.out.println(util.getCode());
-            util.write("/Users/jiangli/Desktop/1.png");
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
     }
 }
