@@ -83,7 +83,7 @@ public class Captcha {
         Font font = imgFont.getFont(fontHeight);
         g.setFont(font);
         // 添加噪点
-        float yawpRate = 0.5f;// 噪声率
+        float yawpRate = 0.0f;// 噪声率
         int area = (int) (yawpRate * this.width * this.height);
         for (int i = 0; i < area; i++) {
             int x = random.nextInt(this.width);
